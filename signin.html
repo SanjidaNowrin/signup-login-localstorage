@@ -3,18 +3,63 @@
     <title>Login Form Using local storage js-part3</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <div class="container">
-      <h2>Login Form</h2>
+    <!-- navbar section -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand fw-bolder">HOME</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active fw-bolder"
+                aria-current="page"
+                href="/registration.html"
+                >SIGNUP</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active fw-bolder"
+                aria-current="page"
+                href="/signin.html"
+                >LOGIN</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Sign In Section -->
+    <div class="container border border-2 p-3 mt-3">
+      <h2>Sign In</h2>
+      <hr class="bg-primary" />
       <form action="#">
-        <div class="form-group">
+        <div class="form-group w-75">
           <label for="email">Email:</label>
           <input
             type="email"
@@ -24,25 +69,35 @@
             name="email"
           />
         </div>
-        <div class="form-group">
+        <br />
+        <div class="form-group w-75">
           <label for="pwd">Password:</label>
           <input
             type="password"
             class="form-control"
-            id="psw"
+            id="password"
             placeholder="Enter password"
             name="pwd"
           />
         </div>
-
+        <br />
         <button
           type="button"
           onclick="saveData()"
           id="save_btn"
-          class="btn btn-default"
+          class="btn btn bg-primary text-white fw-bolder"
         >
-          Submit
+          SIGN IN
         </button>
+        <hr class="bg-primary" />
+        <h6>New User</h6>
+
+        <a
+          href="/registration.html"
+          class="btn btn bg-primary text-white fw-bolder"
+          role="button"
+          >SIGN IN</a
+        >
       </form>
     </div>
   </body>
@@ -50,14 +105,14 @@
     let name = localStorage.getItem("name") ? localStorage.getItem("name") : "";
     console.log(name);
     if (name != "") {
-      alert("Please visit profile");
-      window.location.href = "profile.html";
+      alert("Please visit dashboard");
+      window.location.href = "dashboard.html";
     }
     function saveData() {
-      let email, psw;
+      let email, password;
       email = document.getElementById("email").value;
 
-      psw = document.getElementById("psw").value;
+      password = document.getElementById("password").value;
 
       let user_records = new Array();
       user_records = JSON.parse(localStorage.getItem("users"))
@@ -65,18 +120,18 @@
         : [];
       if (
         user_records.some((v) => {
-          return v.email == email && v.psw == psw;
+          return v.email == email && v.password == password;
         })
       ) {
         alert("Login Pass");
         let current_user = user_records.filter((v) => {
-          return v.email == email && v.psw == psw;
+          return v.email == email && v.password == password;
         })[0];
         localStorage.setItem("name", current_user.name);
         localStorage.setItem("email", current_user.email);
         window.location.href = "dashboard.html";
       } else {
-        alert("Login Fail");
+        alert("Login Failed");
       }
     }
   </script>
